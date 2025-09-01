@@ -1,0 +1,236 @@
+General pyhton code :
+
+"""
+Created on Mon Sep  1 23:41:00 2025
+
+@author: Vhiraj
+"""
+
+class Node():
+     def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList():
+
+    def __init__(self):
+        self.head=None
+        self.rear=self.head
+
+    def insert(self,value):
+        if self.head==None:
+            self.head = Node(value)
+            self.rear=self.head
+
+        else:
+            self.rear.next=Node(value)
+            self.rear=self.rear.next
+            self.rear.next=None
+    
+    def dis(self):
+        if self.head==None:
+            print("No list")
+
+        else:
+            temp=self.head
+
+            while temp!=None:
+                print(temp.data, end="->")
+                temp=temp.next
+        
+            print("None")
+
+
+class add():
+
+    def __init__(self):
+        self.l1=LinkedList()
+        self.l2=LinkedList()
+        self.l3=LinkedList()
+
+    def push(self):
+        print()
+        while(True):
+            try:
+                n1=int(input("Enter the number of values of List 1 : "))
+            except ValueError:
+                print("Enter a Valid Integer!")
+            else:
+                break
+            
+        while(True):
+            try:
+                n2=int(input("Enter the number of values of List 2 : "))
+            except ValueError:
+                print("Enter a Valid Integer!")
+            else:
+                break
+       
+        
+        if n1>=n2:
+            i=0
+            print()
+            while (i<n1):
+                while(True):
+                    try:
+                        num1 = int(input("Enter the value for List 1 : "))
+                    except ValueError:
+                        print("Enter a Valid Integer!")
+                    else:
+                        break
+                self.l1.insert(num1) 
+                i=i+1
+            
+            i=0  
+            print()
+            while (i<n2):
+                while(True):
+                    try:
+                        num2 = int(input("Enter the value for List 2 : "))
+                    except ValueError:
+                        print("Enter a Valid Integer!")
+                    else:
+                        break
+                self.l2.insert(num2) 
+                i=i+1
+                
+            j=n1-n2
+            for i in range (0,j,1):
+                self.l2.insert(0)
+                
+        elif n2>n1:
+            i=0
+            print()
+            while (i<n1):
+                while(True):
+                    try:
+                        num1 = int(input("Enter the value for List 1 : "))
+                    except ValueError:
+                        print("Enter a Valid Integer!")
+                    else:
+                        break
+                self.l1.insert(num1) 
+                i=i+1
+            
+            i=0  
+            print()
+            while (i<n2):
+                while(True):
+                    try:
+                        num2 = int(input("Enter the value for List 2 : "))
+                    except ValueError:
+                        print("Enter a Valid Integer!")
+                    else:
+                        break
+                self.l2.insert(num2) 
+                i=i+1
+                
+            j=n2-n1
+            for i in range (0,j,1):
+                self.l1.insert(0)
+        
+        
+    def add1(self):
+        if self.l1.head is None and self.l2.head is None:
+            print("Build Lists First!")
+            return
+
+        temp1 = self.l1.head
+        temp2 = self.l2.head
+        carry = 0
+
+        while temp1 is not None:
+            temp = temp1.data + temp2.data + carry
+            carry = temp // 10
+            digit = temp % 10
+
+            self.l3.insert(digit)
+
+            temp1 = temp1.next
+            temp2 = temp2.next
+
+        if carry != 0:
+            self.l3.insert(carry)
+
+    def display(self):
+        
+        if self.l1.head==None and self.l2.head==None:
+            print("Build Lists First!")
+        
+        else:
+            print("The List 1 is : ")
+            self.l1.dis()
+            print("The List 2 is : ")
+            self.l2.dis()
+            print("The sum list is : ")
+            self.l3.dis()  
+        
+    def clear(self):
+        self.l1.head=None
+        self.l2.head=None
+        self.l3.head=None
+        
+        self.l1.rear=None
+        self.l2.rear=None
+        self.l3.rear=None
+        
+        print("All Lists Cleared!")
+        
+choice=0
+
+a=add()
+
+while(True):       
+    print("\n___Menu___\n")
+    print("1. Insert")
+    print("2. Display")
+    print("3. Clear")
+    print("4. Exit")
+    print("\n----------\n")
+    
+    while(True):
+        try:
+            choice=int(input("\nEnter the choice : "))
+        except ValueError:
+            print("Enter a Valid Integer!")
+        else:
+            break
+        
+    if choice==1:
+        a.push()
+        
+    elif choice==2:
+        a.add1()
+        a.display()
+        
+    elif choice==3:
+        a.clear()
+        
+    elif choice==4:
+        print("Exitting...")
+        break
+    
+    else:
+        print("Enter a valid choice!")
+
+Leet Code specific:
+
+class Solution:
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        dummy = ListNode(0)
+        current = dummy
+        carry = 0
+        
+        while l1 or l2 or carry:
+            x = l1.val if l1 else 0
+            y = l2.val if l2 else 0
+            total = x + y + carry
+            
+            carry = total // 10
+            current.next = ListNode(total % 10)
+            current = current.next
+            
+            if l1: l1 = l1.next
+            if l2: l2 = l2.next
+        
+        return dummy.next
